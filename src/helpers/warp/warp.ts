@@ -19,12 +19,12 @@ import {
   Keypair,
   Memo,
   Operation,
-  Server,
   Transaction,
   TransactionBuilder,
 } from 'stellar-sdk';
 import TrezorConnect from 'trezor-connect';
 import Web3 from 'web3';
+import { createStellarServer } from 'src/helpers/stellarServer';
 
 const TimeoutInfinite = 0;
 
@@ -155,7 +155,7 @@ export const warpFromStellarToBsc = async (
 
     // lock in stellar
     const keyPair = publicKey ? Keypair.fromPublicKey(publicKey) : Keypair.fromSecret(secret || '');
-    const server = new Server(process.env.REACT_APP_HORIZON || '');
+    const server = createStellarServer();
     const fee = await server.fetchBaseFee();
     const account = await server.loadAccount(keyPair.publicKey());
     const sourceAccount = new Account(account.accountId(), account.sequenceNumber().toString());

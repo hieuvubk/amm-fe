@@ -8,7 +8,6 @@ import {
   FeeBumpTransaction,
   Keypair,
   Operation,
-  Server,
   Transaction,
   TransactionBuilder,
 } from 'stellar-sdk';
@@ -21,9 +20,10 @@ import BigNumber from 'bignumber.js';
 import { Ledger, Trezor } from 'src/features/ConnectWallet/constants/hardwareWallet';
 import Str from '@ledgerhq/hw-app-str';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
+import { createStellarServer } from 'src/helpers/stellarServer';
 import { STELLAR_ASSET_TYPE } from '../../Orderbook/constants/FomartDataValue';
 
-const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+const server = createStellarServer();
 const networkPassphrase = process.env.REACT_APP_NETWORK_PASSPHRASE;
 const offerIdForNewOffer = '0';
 

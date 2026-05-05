@@ -1,5 +1,6 @@
-import { Keypair, Server } from 'stellar-sdk';
+import { Keypair } from 'stellar-sdk';
 import BigNumber from 'bignumber.js';
+import { createStellarServer } from 'src/helpers/stellarServer';
 
 export const getPublicKeyFromPrivateKey = (secret: string): string => {
   try {
@@ -28,7 +29,7 @@ export const isStellarSecret = (secret: string): boolean => {
 
 export const isStellarAccountActive = async (address: string): Promise<boolean> => {
   try {
-    const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+    const server = createStellarServer();
     const account = await server.loadAccount(address);
 
     if (account.balances) {

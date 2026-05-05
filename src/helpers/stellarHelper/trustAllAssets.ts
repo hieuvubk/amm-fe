@@ -12,11 +12,11 @@ import {
   FeeBumpTransaction,
   Keypair,
   Operation,
-  Server,
   Transaction,
   TransactionBuilder,
 } from 'stellar-sdk';
 import TrezorConnect from 'trezor-connect';
+import { createStellarServer } from 'src/helpers/stellarServer';
 
 export const trustAllAssets = async (
   walletAddressForTrustline: {
@@ -55,7 +55,7 @@ export const trustAllAssets = async (
   const secret = walletAddressForTrustline.privateKey;
 
   const keyPair = publicKey ? Keypair.fromPublicKey(publicKey) : Keypair.fromSecret(secret || '');
-  const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+  const server = createStellarServer();
   const account = await server.loadAccount(keyPair.publicKey());
   const sourceAccount = new Account(account.accountId(), account.sequenceNumber());
   const fee = (await server.fetchBaseFee()).toString();

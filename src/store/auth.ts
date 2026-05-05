@@ -7,6 +7,7 @@ import { RegisterInfo, LogInBody } from 'src/interfaces/auth';
 import { setTokenCookie } from 'src/helpers/storage';
 import httpExceptionSubCode from 'src/constants/httpExceptionSubCode';
 import { BaseSocket } from 'src/socket/BaseSocket';
+import { UserRole } from 'src/constants/user-role';
 
 export const FunCurrencies = {
   seconds: 1,
@@ -29,6 +30,46 @@ const setSnackbarError = (message: string) => {
       variant: SnackbarVariant.ERROR,
     }),
   );
+};
+
+const isDevFakeLoginEnabled = (): boolean => process.env.NODE_ENV === 'development' && !process.env.REACT_APP_BASE_API;
+
+const createFakeJwt = (payload: Record<string, unknown>): string => {
+  const encode = (value: Record<string, unknown>): string =>
+    btoa(JSON.stringify(value)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+
+  return `${encode({ alg: 'none', typ: 'JWT' })}.${encode(payload)}.`;
+};
+
+const createFakeUser = () => {
+  const now = Math.floor(Date.now() / 1000);
+  const accessToken = createFakeJwt({ sub: 'dev-user', exp: now + 60 * 60 * 24 });
+  const refreshToken = createFakeJwt({ sub: 'dev-user', exp: now + 60 * 60 * 24 * 7 });
+
+  return {
+    access_token: accessToken,
+    refresh_token: refreshToken,
+    id: 1,
+    email: 'fake.test@example.com',
+    company: 'Local Dev',
+    fullname: 'Fake Test User',
+    phone: '0900000000',
+    velo_account: '',
+    role: UserRole.User,
+    created_at: new Date(),
+    last_login: new Date(),
+    IP: '127.0.0.1',
+    listUserFunCurrencies: [
+      {
+        users_id: 1,
+        functional_currencies_id: 1,
+        functional_currencies_currency: 'US Dollar',
+        functional_currencies_symbol: '$',
+        functional_currencies_iso_code: 'USD',
+        is_active: FunCurrencies.primary,
+      },
+    ],
+  };
 };
 
 export const createUser = createAsyncThunk('user/create', async (body: RegisterInfo, { rejectWithValue }) => {
@@ -70,10 +111,33 @@ export const resendVerifyEmail = createAsyncThunk(
 );
 
 export const getMe = createAsyncThunk('get-profile', async () => {
+  if (isDevFakeLoginEnabled()) {
+    return {
+      code: 0,
+      data: createFakeUser(),
+    };
+  }
+
   return await axiosInstance.get(`/users/me`);
 });
 
 export const postLogin = createAsyncThunk('user/postLogin', async (body: LogInBody, { rejectWithValue }) => {
+  if (isDevFakeLoginEnabled()) {
+    if (body.username === 'fake.test@example.com' && body.password === 'Password1') {
+      return {
+        code: 0,
+        data: createFakeUser(),
+      };
+    }
+
+    setSnackbarError('Use fake.test@example.com / Password1 for local fake login.');
+    return rejectWithValue({
+      status_code: 403,
+      code: httpExceptionSubCode.FORBIDDEN.WRONG_EMAIL,
+      message: 'Wrong email or password!',
+    });
+  }
+
   try {
     const res = await axiosInstance.post('/auth/login', body);
 

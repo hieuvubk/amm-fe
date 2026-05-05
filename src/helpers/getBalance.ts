@@ -1,8 +1,8 @@
 import Web3 from 'web3';
-import { Server } from 'stellar-sdk';
 import { erc20Abi } from 'src/constants/abi/erc20Abi';
 import { BigNumber } from '@0x/utils';
 import { getStellarAssetType } from 'src/features/Orderbook/helpers/orderbookHelper';
+import { createStellarServer } from 'src/helpers/stellarServer';
 
 export const getBalanceInBsc = async (
   accountAddress: string,
@@ -28,7 +28,7 @@ export const getBalanceInStellar = async (
 ): Promise<string> => {
   try {
     const asset_type_string = getStellarAssetType(asset_type);
-    const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+    const server = createStellarServer();
     // TODO: catch exception when account is not active
     const account = await server.loadAccount(accountAddress);
     const balances = account.balances;
@@ -58,7 +58,7 @@ export const getAvailableBalanceInStellar = async (
 ): Promise<string> => {
   try {
     const asset_type_string = getStellarAssetType(asset_type);
-    const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+    const server = createStellarServer();
     // TODO: catch exception when account is not active
     const account = await server.loadAccount(accountAddress);
     const balances = account.balances;
@@ -83,7 +83,7 @@ export const getAvailableBalanceInStellar = async (
 
 // without XLM
 export const getAllBalanceInStellar = async (accountAddress: string): Promise<Array<any>> => {
-  const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+  const server = createStellarServer();
   const account = await server.loadAccount(accountAddress);
   const balances = account.balances;
   if (balances) {

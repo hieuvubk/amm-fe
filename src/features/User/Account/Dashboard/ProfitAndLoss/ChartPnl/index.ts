@@ -1,7 +1,7 @@
-export { default as ColumnPnl } from './Column';
-export { default as LinePnl } from './Line';
 import BigNumber from 'bignumber.js';
 import moment from 'moment';
+export { default as ColumnPnl } from './Column';
+export { default as LinePnl } from './Line';
 
 export const formatXaxis = (date: Date): string => {
   return date.getDate() === 1 ? moment(date).format('MMM') : moment(date).format('DD');

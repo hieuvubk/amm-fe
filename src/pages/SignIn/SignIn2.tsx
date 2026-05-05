@@ -20,6 +20,9 @@ import styles from './styles';
 
 const cx = classNames.bind(stylesSCSS);
 
+const isLocalFakeLogin =
+  process.env.NODE_ENV === 'development' && !process.env.REACT_APP_BASE_API && !process.env.REACT_APP_GOOGLE_RECAPTCHA_SITEKEY;
+
 const SignIn2: React.FC = () => {
   const [loadingSetting, setLoadingSetting] = React.useState(false);
   const [isShowScreenLock, setIsShowScreenLock] = useState(false);
@@ -41,7 +44,7 @@ const SignIn2: React.FC = () => {
   const initialValues = {
     username: '',
     password: '',
-    isVerify: '',
+    isVerify: isLocalFakeLogin ? 'dev' : '',
   };
   const refFormik = React.useRef<FormikProps<typeof initialValues>>(null);
 
@@ -133,19 +136,21 @@ const SignIn2: React.FC = () => {
                             Forgot Password
                           </Link>
 
-                          <div className={cx('g-recaptcha')}>
-                            <ReCAPTCHA
-                              sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_SITEKEY || ''}
-                              onExpired={() => {
-                                setFieldValue('isVerify', '');
-                                setShowCaptcharError(false);
-                              }}
-                              onChange={(v: any) => {
-                                setFieldValue('isVerify', v);
-                              }}
-                            />
-                          </div>
-                          {showCaptchaError && (
+                          {!isLocalFakeLogin && (
+                            <div className={cx('g-recaptcha')}>
+                              <ReCAPTCHA
+                                sitekey={process.env.REACT_APP_GOOGLE_RECAPTCHA_SITEKEY || ''}
+                                onExpired={() => {
+                                  setFieldValue('isVerify', '');
+                                  setShowCaptcharError(false);
+                                }}
+                                onChange={(v: any) => {
+                                  setFieldValue('isVerify', v);
+                                }}
+                              />
+                            </div>
+                          )}
+                          {!isLocalFakeLogin && showCaptchaError && (
                             <ErrorMessage
                               name="isVerify"
                               component={(): JSX.Element => (

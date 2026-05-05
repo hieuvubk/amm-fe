@@ -1,6 +1,6 @@
 import { signTransaction } from '@stellar/freighter-api';
 import { WalletData } from 'src/features/ConnectWallet/interfaces/WalletData';
-import { Account, Asset, FeeBumpTransaction, Keypair, Server, Transaction, TransactionBuilder } from 'stellar-sdk';
+import { Account, Asset, FeeBumpTransaction, Keypair, Transaction, TransactionBuilder } from 'stellar-sdk';
 import { buildTxCreateBuyOffer } from 'src/features/OrderForm/helpers/sendStellarOffer';
 import { HardwareWalletType } from 'src/features/OrderForm/constants/hardwareWallet';
 import transformTrezorTransaction from 'src/features/OrderForm/helpers/transformTrezorTransaction';
@@ -9,6 +9,7 @@ import TrezorConnect from 'trezor-connect';
 import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import Str from '@ledgerhq/hw-app-str';
 import { Pair } from 'src/features/Pairs/interfaces/pair';
+import { createStellarServer } from 'src/helpers/stellarServer';
 
 export const cancelStellarOffer = async (offerId: string, wallet: WalletData, pair?: Pair | null): Promise<any> => {
   let path;
@@ -39,7 +40,7 @@ export const cancelStellarOffer = async (offerId: string, wallet: WalletData, pa
   const secret = wallet.privateKey;
 
   const keyPair = publicKey ? Keypair.fromPublicKey(publicKey) : Keypair.fromSecret(secret || '');
-  const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+  const server = createStellarServer();
   const account = await server.loadAccount(keyPair.publicKey());
   const baseAsset = pair ? new Asset(pair.base_symbol, pair.base_stellar_issuer) : Asset.native();
   const targetAsset = pair ? new Asset(pair.quote_symbol, pair.quote_stellar_issuer) : Asset.native();

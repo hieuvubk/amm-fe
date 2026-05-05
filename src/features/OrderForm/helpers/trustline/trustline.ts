@@ -1,5 +1,5 @@
 import { stellarTxTimeout } from 'src/features/OrderForm/constants/stellar';
-import { Account, Keypair, Operation, Server, TransactionBuilder } from 'stellar-sdk';
+import { Account, Keypair, Operation, TransactionBuilder } from 'stellar-sdk';
 import { HardwareWalletType } from 'src/features/OrderForm/constants/hardwareWallet';
 import { getAsset } from 'src/features/OrderForm/helpers/sendStellarOffer';
 import transformTrezorTransaction from 'src/features/OrderForm/helpers/transformTrezorTransaction';
@@ -10,8 +10,9 @@ import Str from '@ledgerhq/hw-app-str';
 import { getStellarAssetType } from 'src/features/Orderbook/helpers/orderbookHelper';
 import { STELLAR_ASSET_TYPE } from 'src/features/Orderbook/constants/FomartDataValue';
 import { TrustLineParam } from 'src/features/OrderForm/interfaces/TrustLineParam';
+import { createStellarServer } from 'src/helpers/stellarServer';
 
-const server = new Server(`${process.env.REACT_APP_HORIZON}`);
+const server = createStellarServer();
 const networkPassphrase = process.env.REACT_APP_NETWORK_PASSPHRASE;
 
 export const isTrusted = async (param: TrustLineParam): Promise<boolean> => {
