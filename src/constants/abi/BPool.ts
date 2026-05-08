@@ -191,6 +191,20 @@ export const BPool = [
   },
   {
     inputs: [
+      { internalType: 'uint256', name: 'tokenBalanceIn', type: 'uint256' },
+      { internalType: 'uint256', name: 'tokenWeightIn', type: 'uint256' },
+      { internalType: 'uint256', name: 'tokenBalanceOut', type: 'uint256' },
+      { internalType: 'uint256', name: 'tokenWeightOut', type: 'uint256' },
+      { internalType: 'uint256', name: 'tokenAmountIn', type: 'uint256' },
+      { internalType: 'uint256', name: 'swapFee', type: 'uint256' },
+    ],
+    name: 'calcOutGivenIn',
+    outputs: [{ internalType: 'uint256', name: 'tokenAmountOut', type: 'uint256' }],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
         name: 'tokenBalanceOut',

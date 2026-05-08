@@ -1,0 +1,211 @@
+:root {
+  .container {
+    max-width: 1440px;
+    padding: 24px 0 48px;
+    margin: 0 auto;
+
+    .back-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-primary, #00b894);
+      font-size: 14px;
+      padding: 0;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    // ── Header ──────────────────────────────────────────
+    .header {
+      margin-bottom: 28px;
+
+      .address-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+
+        h2 {
+          color: var(--color-body);
+          margin: 0;
+          font-family: monospace;
+          font-size: 18px;
+        }
+
+        a {
+          color: var(--color-primary, #00b894);
+          font-size: 13px;
+          text-decoration: none;
+          &:hover { text-decoration: underline; }
+        }
+      }
+
+      .badges {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        padding: 3px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+
+        &--green  { background: rgba(0,184,148,.15); color: #00b894; }
+        &--blue   { background: rgba(52,152,219,.15); color: #3498db; }
+        &--gray   { background: rgba(130,130,130,.15); color: #828282; }
+      }
+
+      .stats-row {
+        display: flex;
+        gap: 32px;
+        flex-wrap: wrap;
+
+        .stat {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+
+          .stat__label {
+            font-size: 12px;
+            color: var(--body-text);
+            opacity: 0.7;
+          }
+
+          .stat__value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-body);
+          }
+        }
+      }
+    }
+
+    // ── Action buttons ───────────────────────────────────
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+
+      button {
+        height: 40px;
+        padding: 0 24px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: opacity .15s;
+
+        &:disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
+        }
+
+        &:not(:disabled):hover {
+          opacity: 0.85;
+        }
+      }
+
+      .btn-add    { background: var(--color-primary, #00b894); color: #fff; }
+      .btn-remove { background: rgba(231,76,60,.15); color: #e74c3c; border: 1px solid rgba(231,76,60,.3); }
+      .btn-swap   { background: rgba(52,152,219,.15); color: #3498db; border: 1px solid rgba(52,152,219,.3); }
+    }
+
+    .wallet-note {
+      font-size: 13px;
+      color: var(--body-text);
+      opacity: 0.6;
+      margin-bottom: 12px;
+    }
+
+    // ── Token table ──────────────────────────────────────
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--body-text);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-bottom: 32px;
+
+      th {
+        text-align: left;
+        padding: 10px 16px;
+        color: var(--body-text);
+        border-bottom: 2px solid var(--tab-border, #eee);
+        font-weight: 600;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--tab-border, #eee);
+        color: var(--color-body);
+        vertical-align: middle;
+      }
+
+      .weight-bar-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .weight-bar {
+          height: 6px;
+          border-radius: 3px;
+          background: var(--color-primary, #00b894);
+          opacity: .7;
+        }
+      }
+
+      .mono { font-family: monospace; font-size: 12px; color: var(--body-text); opacity: .7; }
+    }
+
+    // ── My LP balance ────────────────────────────────────
+    .lp-box {
+      background: var(--pool-search, #f5f5f5);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .lp-box__label { font-size: 12px; color: var(--body-text); opacity: .7; }
+      .lp-box__value { font-size: 20px; font-weight: 700; color: var(--color-body); }
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 80px 0;
+      color: var(--body-text);
+    }
+
+    .error {
+      padding: 16px;
+      background: rgba(231,76,60,.08);
+      border: 1px solid rgba(231,76,60,.3);
+      border-radius: 8px;
+      color: #e74c3c;
+      font-size: 14px;
+    }
+  }
+}

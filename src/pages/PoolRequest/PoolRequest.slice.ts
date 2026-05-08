@@ -29,8 +29,9 @@ export const postPoolRequest = createAsyncThunk('user/poolRequest', async (body:
 
 export const countPoolRequest = async (): Promise<number> => {
   try {
-    const res = await axiosInstance.get('/pools/count');
-    return res.data;
+    // const res = await axiosInstance.get('/pools/count');
+    // return res.data;
+    return 0;
   } catch (error) {
     setSnackbarError(error.response.data.message);
     throw error;

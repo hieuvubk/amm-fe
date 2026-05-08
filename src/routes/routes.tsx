@@ -26,6 +26,8 @@ import { Route } from 'react-router';
 import PoolsInfo from 'src/pages/PoolsInfo';
 import MarketOverview from 'src/pages/MarketOverview';
 import PoolRequest from 'src/pages/PoolRequest';
+import PoolsOnchain from 'src/pages/PoolsOnchain';
+import PoolsOnchainDetail from 'src/pages/PoolsOnchainDetail';
 // 404 MAIN TAIN
 import NotFound from 'src/pages/Maintain-Notfound/component/404';
 import MainTain from 'src/pages/Maintain-Notfound/component/maintain';
@@ -99,6 +101,17 @@ const routers = {
   poolsInfo: {
     path: routeConstants.POOLS_INFO,
     component: PoolsInfo,
+    route: PrivateRoute,
+  },
+  poolsOnchain: {
+    exact: true,
+    path: routeConstants.POOLS_ONCHAIN,
+    component: PoolsOnchain,
+    route: PrivateRoute,
+  },
+  poolsOnchainDetail: {
+    path: routeConstants.POOLS_ONCHAIN_DETAIL,
+    component: PoolsOnchainDetail,
     route: PrivateRoute,
   },
 

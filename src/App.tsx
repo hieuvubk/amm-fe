@@ -94,7 +94,7 @@ const App: React.FC<any> = () => {
             }}
           />
           <ConnectWalletDialog />
-          <AddressIsUsedWarning />
+          {/* <AddressIsUsedWarning /> */}
           <ExtensionInstallationRequestWarning />
           <WrongNetworkWarning />
           <StellarAccountIsNotActiveWarning />

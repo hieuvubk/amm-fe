@@ -7,7 +7,6 @@ import httpExceptionSubCode from 'src/constants/httpExceptionSubCode';
 import { accountDisabled } from 'src/store/accountDisabled';
 import store from 'src/store/store';
 import jwt_decode from 'jwt-decode';
-import { openSnackbar, SnackbarVariant } from 'src/store/snackbar';
 
 const axiosInstance = axios.create({
   // eslint-disable-next-line max-len
@@ -89,13 +88,6 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (!error.response) {
-      store.dispatch(
-        //@ts-ignore
-        openSnackbar({
-          message: 'No Internet connection',
-          variant: SnackbarVariant.ERROR,
-        }),
-      );
       return Promise.reject(error);
     }
     switch (error.response?.status) {

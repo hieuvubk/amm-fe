@@ -7,6 +7,8 @@ const POOLS_LIST = '/pools';
 const POOLS_INFO = '/pools/:id';
 const MARKET_OVERVIEW = '/market-overview';
 const POOL_REQUEST = '/pools/new-request';
+const POOLS_ONCHAIN = '/pools-onchain';
+const POOLS_ONCHAIN_DETAIL = '/pools-onchain/:address';
 const VERIFY_EMAIL = '/verify-email';
 const NOT_FOUND = '/not-found';
 const MAIN_TAIN = '/maintain';
@@ -23,4 +25,6 @@ export default {
   POOLS_INFO,
   MARKET_OVERVIEW,
   POOL_REQUEST,
+  POOLS_ONCHAIN,
+  POOLS_ONCHAIN_DETAIL,
 };
