@@ -107,12 +107,12 @@ const routers = {
     exact: true,
     path: routeConstants.POOLS_ONCHAIN,
     component: PoolsOnchain,
-    route: PrivateRoute,
+    route: Route,
   },
   poolsOnchainDetail: {
     path: routeConstants.POOLS_ONCHAIN_DETAIL,
     component: PoolsOnchainDetail,
-    route: PrivateRoute,
+    route: Route,
   },
 
   // account: {

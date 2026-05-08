@@ -149,15 +149,7 @@ const TopNav2: React.FunctionComponent = () => {
     <>
       <AppBar position={'static'} className={cx('nav-bar')}>
         <Toolbar>
-          <Box flexGrow={1} className={cx('logo')}>
-            <img
-              src={theme === THEME_MODE.LIGHT ? logoLight : logoDark}
-              onClick={() => {
-                history.push(!!getCookieStorage('access_token') ? routeConstants.DASHBOARD : routeConstants.LANDING);
-                isShowTradingViewChart();
-              }}
-            />
-          </Box>
+          <Box flexGrow={1} className={cx('logo')} />
           {!loginFlowRoutes.includes(currentRoute) && currentRoute !== routeConstants.LANDING && (
             <>
               <Box flexGrow={11}>
